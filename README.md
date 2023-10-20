@@ -3,15 +3,13 @@
 ## Description
 I'm currently learning Python, Bash scripting and how to create cronjobs. I created this little project as a fun Halloween prank to pull on my husband (who I'm sure will seek retribution, lol!).
 
-The script will play one of three sound files every time it detects a mouse click. The script will continue running in the background, and will not end until the date conditional is no longer met. Unless you manually delete the script because you recognize how annoying this is, and you're actually a nice person.
-
-Some of this may change. I'll update the readme, if I make any changes.
+The script will play one of three sound files every time it detects a mouse click. The script will continue running in the background, and will not end until the date conditional is no longer met. Unless you hit the `esc` key, of course (did you think I was that mean?).
 
 ### Note
 Pulling off this prank will require access to another person's machine. DO NOT DO ANY OF THIS WITHOUT THEIR CONSENT!
 
 ## Usage
-- Clone the repo onto your "target" machine
+- You can download just the [yes_script.sh](https://github.com/stephburton/happy-halloweener/raw/main/yes_script.sh), if you prefer. It will download all of the other files (with the exception of the license and the readme files) from my repo, once the script is running. This simplifies things for my purposes, but you can also just clone the repo if you prefer.
 - Run `pip install -r requirements.txt` to install required libraries
 - On MacOS and Linux: Add cronjob using `crontab -e` and then add `0 0 31 10 * /path/to/yes_script.sh` (or another date, if you prefer)
   - On Windows: Set up the cronjob using Task Scheduler. [This guide](https://www.tomsguide.com/how-to/how-to-use-task-scheduler-on-windows) looks like it will give you some idea how to do this.
