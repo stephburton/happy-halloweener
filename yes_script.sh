@@ -8,9 +8,11 @@ create_dir_and_files() {
       cd "$destination" || { echo "Cannot move to dir." >> output.log; exit 1; }
 
       local urls=(
-        "URL1"
-        "URL2"
-        "URL3"
+        "https://github.com/stephburton/happy-halloweener/raw/main/yes1.mp3"
+        "https://github.com/stephburton/happy-halloweener/raw/main/yes2.mp3"
+        "https://github.com/stephburton/happy-halloweener/raw/main/yes3.mp3"
+        "https://github.com/stephburton/happy-halloweener/raw/main/requirements.txt"
+        "https://github.com/stephburton/happy-halloweener/raw/main/yess_click.py"
       )
       for url in "${urls[@]}"; do
         filename=$(basename "url")
