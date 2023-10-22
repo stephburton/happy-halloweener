@@ -1,34 +1,39 @@
 from pynput import mouse, keyboard
 from playsound import playsound
 
-# List of sounds to be played
-sounds = ['yes1.mp3','yes2.mp3','yes3.mp3']
-i = 0
+class soundManager():
+    sounds = ['yes1.mp3','yes2.mp3','yes3.mp3'] 
+    i = 0
 
-stop_listening = False
-
-# What to do when the mouse button is clicked
-def on_click(x, y, button, pressed):
-    global i
-    global stop_listening
-    if stop_listening:
-        return False
-    if pressed:
-        current_sound = sounds[i % len(sounds)] # will cycle through again once list is exhausted
+    def play_sounds(self):
+        current_sound = self.sounds[self.i % len(self.sounds)] # will cycle through again once list is exhausted
         playsound(current_sound)
-        i += 1 # moves to the next index
+        self.i += 1 # moves to the next index
 
-def on_key_press(key):
-    global stop_listening
-    if key == keyboard.Key.esc: # stop the script if the user hits the esc key
-        stop_listening = True
-        return False
-    
-mouse_listener = mouse.Listener(on_click=on_click)
-mouse_listener.start()
+class inputListener():
 
-key_listener = keyboard.Listener(on_press=on_key_press)
-key_listener.start()
+    def __init__(self):
+        self.click_sounds = soundManager()
+        self.stop_listening = False
+        
+        self.mouse_listener = mouse.Listener(on_click=self.on_click)
+        self.mouse_listener.start()
 
-mouse_listener.join()
-key_listener.join()
+        self.key_listener = keyboard.Listener(on_press=self.on_key_press)
+        self.key_listener.start()
+
+        self.mouse_listener.join()
+        self.key_listener.join()
+
+    def on_click(self, x, y, button, pressed):
+        if self.stop_listening:
+            return False
+        if pressed:
+            self.click_sounds.play_sounds()
+
+    def on_key_press(self, key):
+        if key == keyboard.Key.esc: # stop the script if the user hits the esc key
+            self.stop_listening = True
+            return False
+        
+listener_monitor = inputListener()

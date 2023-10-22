@@ -30,14 +30,11 @@ file_executable_check() {
     fi
 }
 
-run_on_date() {
-    local NOW=$(date "+%Y-%m-%d")
-
-    if [[ "$NOW" == "2023-10-31" ]]; then
-      nohup python3 yess_click.py > output.log 2>&1 &
-    fi
+# Removed date condition, since we're setting it in the cronjob
+run_script() {
+  nohup python3 yess_click.py > output.log 2>&1 &
 }
 
 create_dir_and_files
 file_executable_check
-run_on_date
+run_script
