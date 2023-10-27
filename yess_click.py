@@ -1,8 +1,13 @@
+import os
 from pynput import mouse, keyboard
 from playsound import playsound
 
+current_directory = os.path.dirname(os.path.abspath(__file__))
+
 class soundManager():
-    sounds = ['yes1.mp3','yes2.mp3','yes3.mp3'] 
+    sounds = [os.path.join(current_directory,'yes1.mp3'),
+              os.path.join(current_directory,'yes2.mp3'),
+              os.path.join(current_directory,'yes3.mp3')] 
     i = 0
 
     def play_sounds(self):
