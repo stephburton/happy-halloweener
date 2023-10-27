@@ -1,40 +1,19 @@
 #!/usr/bin/env bash
 
-create_dir_and_files() {
-    local destination="/Users/$(whoami)/happy_halloween"
+check_shell() {
+    current_shell=$(echo SHELL)
 
-    if [ ! -d "$destination" ]; then
-      mkdir -p "$destination" || { echo "Dir not created." >> output.log; exit 1; }
-      cd "$destination" || { echo "Cannot move to dir." >> output.log; exit 1; }
-
-      local urls=(
-        "https://github.com/stephburton/happy-halloweener/raw/main/yes1.mp3"
-        "https://github.com/stephburton/happy-halloweener/raw/main/yes2.mp3"
-        "https://github.com/stephburton/happy-halloweener/raw/main/yes3.mp3"
-        "https://github.com/stephburton/happy-halloweener/raw/main/requirements.txt"
-        "https://github.com/stephburton/happy-halloweener/raw/main/yess_click.py"
-      )
-      for url in "${urls[@]}"; do
-        filename=$(basename "url")
-        curl -o "$destination/$filename" "$url" || { echo "Cannot download $url." >> output.log; exit 1; }
-      done
-      touch output.log || { exit 1; }
+    if [[ -f ~/.bash_profile ]]; then
+      source ~/.bash_profile
+    elif [[ -f ~/.bashrc ]]; then
+      source ~/.bashrc
+    elif [[ -f ~/.zprofile ]]; then
+      source ~/.zprofile
+    elif [[ -f ~/.zshrc ]]; then
+      source ~/.zshrc
     fi
 }
 
-file_executable_check() {
-    local file_path="./yess_click.py"
+check_shell
 
-    if [ ! -x "$file_path" ]; then
-      chmod +x "$file_path" || { echo "$file_path cannot be made executable." >> output.log; exit 1; }
-    fi
-}
-
-# Removed date condition, since we're setting it in the cronjob
-run_script() {
-  nohup python3 yess_click.py > output.log 2>&1 &
-}
-
-create_dir_and_files
-file_executable_check
-run_script
+nohup python3 /Users/$(whoami)/happy_halloween/yess_click.py > /Users/$(whoami)/happy_halloween/output.log 2>&1 &
