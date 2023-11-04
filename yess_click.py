@@ -4,7 +4,7 @@ from playsound import playsound
 
 current_directory = os.path.dirname(os.path.abspath(__file__))
 
-class soundManager():
+class SoundManager():
     sounds = [os.path.join(current_directory,'yes1.mp3'),
               os.path.join(current_directory,'yes2.mp3'),
               os.path.join(current_directory,'yes3.mp3')] 
@@ -15,18 +15,21 @@ class soundManager():
         playsound(current_sound)
         self.i += 1 # moves to the next index
 
-class inputListener():
+class InputListener():
 
     def __init__(self):
-        self.click_sounds = soundManager()
+        self.sound_manager = SoundManager()
         self.stop_listening = False
-        
+        self.init_listeners()
+
+    def init_listeners(self):
         self.mouse_listener = mouse.Listener(on_click=self.on_click)
         self.mouse_listener.start()
 
         self.key_listener = keyboard.Listener(on_press=self.on_key_press)
         self.key_listener.start()
 
+    def start_listening(self):
         self.mouse_listener.join()
         self.key_listener.join()
 
@@ -34,11 +37,12 @@ class inputListener():
         if self.stop_listening:
             return False
         if pressed:
-            self.click_sounds.play_sounds()
+            self.sound_manager.play_sounds()
 
     def on_key_press(self, key):
         if key == keyboard.Key.esc: # stop the script if the user hits the esc key
             self.stop_listening = True
             return False
         
-listener_monitor = inputListener()
+listener_monitor = InputListener()
+listener_monitor.start_listening()
